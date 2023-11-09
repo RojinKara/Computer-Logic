@@ -27,7 +27,7 @@ int main() {
     seven_segment_init();
 
     printf("HELLO!\n");
-    seven_segment_show(8);
+    seven_segment_show(36);
     sleep_ms(2000);
     seven_segment_off();
 
