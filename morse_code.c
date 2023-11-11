@@ -49,7 +49,7 @@ int main() {
         t = (uint64_t) (time_us_64() - t);
 
         if (t < 250000 && t > 50000) {
-            printf(". detected\n");
+            //printf(". detected\n");
             checkButton(1);
         } else if (t > 700000){
             printf("button held too long\n");
@@ -59,7 +59,7 @@ int main() {
             seven_segment_off();
         } else if (t > 250000) {
             checkButton(2);
-            printf("- detected\n");
+            //printf("- detected\n");
         }
 
         t2 = (uint64_t) (time_us_64() - tOriginal);
@@ -69,6 +69,7 @@ int main() {
 
         if (t2 > 400000) {
             if (toDecode) {
+                printf("%s %s", inputs, ": ");
                 decoder();
                 printf("decode time\n");
                 toDecode = false;
