@@ -81,11 +81,11 @@ int main() {
 int calcLength() {
     int temp = 0;
     for (int i = 0; i < sizeof(inputs); i++) {
-        if (inputs[i] != '\0') {
-            temp++;
+        if (inputs[i] == '\0') {
+            return temp;
         }
+        temp++;
     }
-    return temp;
 }
 /*wipeArray() - after the character is displayed, the array containing the morsecode is wiped using this function. it
  * sets all indexes to null*/
