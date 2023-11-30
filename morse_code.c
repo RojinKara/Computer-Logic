@@ -6,7 +6,6 @@
 
 
 #include <stdio.h>
-#include <string.h>
 #include "pico/stdlib.h"
 #include "includes/seven_segment.h"
 
@@ -49,7 +48,7 @@ int main() {
         t = (uint64_t) (time_us_64() - t);
 
         if (t < 250000 && t > 50000) {
-            //printf(". detected\n");
+            printf(". detected ");
             checkButton(1);
         } else if (t > 700000){
             printf("button held too long\n");
@@ -59,7 +58,7 @@ int main() {
             seven_segment_off();
         } else if (t > 250000) {
             checkButton(2);
-            //printf("- detected\n");
+            printf("- detected ");
         }
 
         t2 = (uint64_t) (time_us_64() - tOriginal);
@@ -69,9 +68,8 @@ int main() {
 
         if (t2 > 400000) {
             if (toDecode) {
-                printf("%s %s", inputs, ": ");
                 decoder();
-                printf("decode time\n");
+                //printf("decoder called\n");
                 toDecode = false;
             }
         }
@@ -86,6 +84,7 @@ int calcLength() {
         }
         temp++;
     }
+    return temp;
 }
 /*wipeArray() - after the character is displayed, the array containing the morsecode is wiped using this function. it
  * sets all indexes to null*/
@@ -101,6 +100,7 @@ void decoder() {
         printf("Morse Code too long, please enter a valid input\n");
         wipeArray();
     } else {
+        printf("%s%s", inputs, ": ");
         if (calcLength() == 1) {
             if (inputs[0] == '.') { //.
                 seven_segment_show(14); //E
@@ -109,7 +109,10 @@ void decoder() {
                 seven_segment_show(29);  //T
                 printf("T\n");
             } else {
-                printf("error while decoding\n");
+                printf("doesn't correspond to a character\n");
+                seven_segment_show(8);
+                sleep_ms(200);
+                seven_segment_off();
             }
         } else if (calcLength() == 2) {
             if (inputs[0] == '.' && inputs[1] == '.') { //..
@@ -125,7 +128,10 @@ void decoder() {
                 seven_segment_show(22); //M
                 printf("M\n");
             } else {
-                printf("error while decoding\n");
+                printf("doesn't correspond to a character\n");
+                seven_segment_show(8);
+                sleep_ms(200);
+                seven_segment_off();
             }
         } else if (calcLength() == 3) {
             if (inputs[0] == '.' && inputs[1] == '.' && inputs[2] == '.') { //...
@@ -153,7 +159,10 @@ void decoder() {
                 seven_segment_show(24); //O
                 printf("O\n");
             } else {
-                printf("error while decoding\n");
+                printf("doesn't correspond to a character\n");
+                seven_segment_show(8);
+                sleep_ms(200);
+                seven_segment_off();
             }
         } else if (calcLength() == 4) {
             if (inputs[0] == '.' && inputs[1] == '.' && inputs[2] == '.' && inputs[3] == '-') {//...-
@@ -193,7 +202,10 @@ void decoder() {
                 seven_segment_show(35); //Z
                 printf("Z\n");
             } else {
-                printf("error while decoding\n");
+                printf("doesn't correspond to a character\n");
+                seven_segment_show(8);
+                sleep_ms(200);
+                seven_segment_off();
             }
         } else if (calcLength() == 5) {
             if (inputs[0] == '-' && inputs[1] == '-' && inputs[2] == '-' && inputs[3] == '-' && inputs[4] == '-') {
@@ -236,7 +248,10 @@ void decoder() {
                 seven_segment_show(9); //9
                 printf("9\n");
             } else {
-                printf("error while decoding\n");
+                printf("doesn't correspond to a character\n");
+                seven_segment_show(8);
+                sleep_ms(200);
+                seven_segment_off();
             }
         }
         wipeArray();
