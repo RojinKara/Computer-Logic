@@ -97,7 +97,10 @@ void wipeArray() {
  * and outputs onto the seven segment display*/
 void decoder() {
     if (calcLength() > 5) {
-        printf("Morse Code too long, please enter a valid input\n");
+        printf("doesn't correspond to a character\n");
+        seven_segment_show(8);
+        sleep_ms(200);
+        seven_segment_off();
         wipeArray();
     } else {
         printf("%s%s", inputs, ": ");
